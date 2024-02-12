@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MagazinController;
 use App\Http\Controllers\ownerController;
+use App\Http\Controllers\ProductController;
 use App\Models\Admin;
 use App\Models\Owner;
 use Illuminate\Http\Request;
@@ -40,6 +41,10 @@ Route::middleware(['auth:sanctum', 'ability:admin'])->prefix('admin')->group(sta
 
 Route::middleware(['auth:sanctum', 'ability:owner'])->prefix('owner')->group(static function () {
     Route::apiResource('magazins', MagazinController::class);
+    Route::get('/producss', [ownerController::class, 'getProductsByMagazinAuth']);
+    Route::get('/magazin/{magazinId}/products', [OwnerController::class, 'getProductsByOwnerAndMagazin']);
+
+   // Route::apiResource('products', ProductController::class);
 
 
    

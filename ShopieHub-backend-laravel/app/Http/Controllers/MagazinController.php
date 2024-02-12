@@ -41,14 +41,20 @@ class MagazinController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show($id)
     {
         // $magazin = magazin::findOrFail($id);
         // return response()->json($magazin);
 
-        $magazin = auth()->user()->magazin::findOrFail($id);
-    
-        return response()->json($magazin);
+     
+
+        try {
+            $magazin = auth()->user()->magazins()->findOrFail($id);
+            return response()->json($magazin);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Magazin not found'], 404);
+        }
+
     }
 
 

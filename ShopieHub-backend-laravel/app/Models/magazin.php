@@ -12,4 +12,12 @@ class magazin extends Model
     {
         return $this->belongsTo(Owner::class);
     }
+    public function products()
+    {
+        return $this->hasOne(product::class,'magazin_id');
+    }
+
+
+
+
 }

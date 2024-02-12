@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Admin;
+use App\Models\category;
 use App\Models\magazin;
 use App\Models\Owner;
+use App\Models\product;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -20,6 +22,8 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Owner::factory(10)->create();
         magazin::factory(10)->create();
+        category::factory(20)->create();
+        product::factory(20)->create();
 
         User::factory()->create([
             'name' => 'user',

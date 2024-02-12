@@ -16,7 +16,7 @@ export default function OwnerMagazinDashboard() {
 
   useEffect(() => {
     MagazinApi.all()
-      .then(({ data }) => {
+      .then(({data}) => {
         setData(data);
         console.log(data);
       })
@@ -60,5 +60,7 @@ export default function OwnerMagazinDashboard() {
         <TableRow></TableRow>
       </TableFooter>
     </Table>
-  );
+
+ 
+    );
 }
