@@ -21,6 +21,7 @@ class MagazinFactory extends Factory
             'adresse' => fake()->address(),
             'Latitude' => fake()->latitude(),
             'Longitude' => fake()->longitude(),
+            'image' => fake()->imageUrl(),
             'owner_id' => function () {
                 // Assuming you have an Owner model and you want to associate the Magazin with an existing owner
                 return \App\Models\Owner::factory()->create()->id;

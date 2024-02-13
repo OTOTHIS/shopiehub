@@ -1,0 +1,30 @@
+Latitude
+: 
+"-5.646885"
+Longitude
+: 
+"-68.770918"
+adresse
+: 
+"6119 Mckenzie Grove Suite 652\nSouth Kieranburgh, TN 22009"
+created_at
+: 
+"2024-02-13T09:23:50.000000Z"
+deleted_at
+: 
+null
+id
+: 
+1
+image
+: 
+"https://via.placeholder.com/640x480.png/00bbff?text=libero"
+name
+: 
+"Easter Langworth III"
+owner_id
+: 
+41
+updated_at
+: 
+"2024-02-13T09:23:50.000000Z"

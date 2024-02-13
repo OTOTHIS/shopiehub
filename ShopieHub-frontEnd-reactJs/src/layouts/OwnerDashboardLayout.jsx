@@ -30,6 +30,7 @@ export default function OwnerDashboardLayout() {
         .then(({ data }) => {
           setUser(data);
           setAuthenticated(true);
+          console.log(data)
         })
         .catch((reason) => {
           contextLogout();
@@ -45,7 +46,7 @@ export default function OwnerDashboardLayout() {
 
   return (
    
-     <div className="hidden flex-col md:flex">
+     <div className="flex-col md:flex">
           <div className="flex h-16 items-center px-4">
             <TeamSwitcher />
             <MainNav className="mx-6" />

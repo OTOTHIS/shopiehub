@@ -50,8 +50,7 @@ class ownerController extends Controller
       $products = $magazin->products()->with(['category' => function ($query) {
         $query->select('id', 'name');
     }])->get();
-cd
-      // You can now use $products to display the information or return it as JSON
+
       return response()->json(['data' => $products]);
   }
 

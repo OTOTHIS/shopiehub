@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import MagazinApi from "../../services/Api/magazinApi";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
+
+import {  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle, } from "../ui/card";
 
 export default function OwnerMagazinDashboard() {
   const [data, setData] = useState([]);
@@ -26,41 +23,28 @@ export default function OwnerMagazinDashboard() {
   }, []);
 
   return (
-    <Table>
-      <TableCaption>A list of your recent magazin.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">id</TableHead>
-          <TableHead>name</TableHead>
-          <TableHead>adresse</TableHead>
-          <TableHead className="text-right">action</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data.map((magazin) => (
-          <TableRow key={magazin.id}>
-            <TableCell className="font-medium">{magazin.id}</TableCell>
-            <TableCell>{magazin.name}</TableCell>
-            <TableCell>{magazin.adresse}</TableCell>
-            <TableCell className="text-right">
-              {
-                <a
-                  href={`https://www.google.com/maps/@${magazin.Latitude},${magazin.Longitude}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  show
-                </a>
-              }
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow></TableRow>
-      </TableFooter>
-    </Table>
 
- 
+  <div className="flex flex-col justify-items-center mx-auto  md:flex-row   ">
+    {data.map((magazin) => (  <Card className="mt-5">
+      <CardHeader>
+
+        
+        <CardTitle>{magazin.name}</CardTitle>
+        <CardDescription>{magazin.adresse}</CardDescription>
+      </CardHeader>
+      <CardContent>
+      <img class="h-40 rounded w-full object-cover object-center mb-6" src={magazin.image} alt="content" />
+          <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
+          <h2 class="text-lg text-gray-900 font-medium title-font éàmb-4">Great Pyramid of Giza</h2>
+          <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+     
+      </CardContent>
+      <CardFooter className="flex justify-between">
+     ewrewrwerwerwe
+      </CardFooter>
+    </Card>
+    ))}
+  </div>
+  
     );
 }

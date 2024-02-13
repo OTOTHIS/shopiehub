@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils"
 import { Link } from "react-router-dom"
 import { ModeToggle } from "../../mode-toggle"
+import { OWNER_DASHBOARD_ROUTE, OWNER_MAGAZIN_PRODUCT_ROUTE, OWNER_MAGAZIN_ROUTE } from "../../../router"
 
 export function MainNav({
   className,
@@ -14,29 +15,29 @@ export function MainNav({
       {...props}
     >
       <Link
-        to="/examples/dashboard"
+        to={OWNER_DASHBOARD_ROUTE}
         className="text-sm font-medium transition-colors hover:text-primary"
       >
         Overview
       </Link>
       <Link
-        to="/examples/dashboard"
+        to={OWNER_DASHBOARD_ROUTE}
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Customers
       </Link>
       <Link
-        to="/examples/dashboard"
+        to={OWNER_MAGAZIN_PRODUCT_ROUTE}
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Products
       </Link>
       <Link
        
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+ to={OWNER_MAGAZIN_ROUTE}        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
          
-        Settings
+        Magazins
       </Link>
       <ModeToggle />
     </nav>

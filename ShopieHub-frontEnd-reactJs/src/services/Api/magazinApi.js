@@ -16,8 +16,8 @@ const MagazinApi = {
   delete: async (id) => {
     return await axiosClient.delete(`/owner/magazins/${id}`);
   },
-  getPoducts: async () => {
-    return await axiosClient.get(`/owner/magazin/Magazin_id/products`);
+  getPoducts: async (id) => {
+    return await axiosClient.get(`/owner/magazin/${id}/products`);
   },
 };
 

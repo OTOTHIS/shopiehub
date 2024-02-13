@@ -72,14 +72,14 @@ export default function AdminDashboardLayout() {
       <hr />
       <main className={"mx-auto px-10 space-y-4 py-4"}>
         <div className="flex">
-          <div className={"w-100 md:w-2/12 border mr-2 rounded-l"}>
+          <div  className={"w-100 md:w-2/12 border mr-2 rounded-l"}>
             <AdminAdministrationSideBar />
           </div>
           <div className={"w-100 md:w-10/12 border rounded-l"}>
             <Outlet />
           </div>
         </div>
-      </main>
+      </main> 
     </>
   );
 }
