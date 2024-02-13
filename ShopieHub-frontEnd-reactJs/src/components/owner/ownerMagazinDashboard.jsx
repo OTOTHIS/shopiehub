@@ -23,13 +23,13 @@ export default function OwnerMagazinDashboard() {
   }, []);
 
   return (
-
-  <div className="flex flex-col justify-items-center mx-auto  md:flex-row   ">
-    {data.map((magazin) => (  <Card className="mt-5">
+<div className=" w-full mx-auto ">
+  <div className="flex flex-col   flex-wrap  gap-3 justify-items-center m-auto  md:flex-row   ">
+     {(data?.length !==0 ? data.map((magazin) => (  <Card  className="mt-5 mx-auto">
       <CardHeader>
 
         
-        <CardTitle>{magazin.name}</CardTitle>
+        <CardTitle>{magazin.id}</CardTitle>
         <CardDescription>{magazin.adresse}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -43,8 +43,8 @@ export default function OwnerMagazinDashboard() {
      ewrewrwerwerwe
       </CardFooter>
     </Card>
-    ))}
+    )):"nothing")}
   </div>
-  
+  </div>
     );
 }

@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         Admin::factory()->create([
             'firstname' => 'Admin',
             'lastname' => 'Admin',
-            'cin' => fake()->address(),
+            'cin' => fake()->title(),
             'phone' => substr(fake()->phoneNumber(),10),
             'email' => 'admin@admin.admin',
             'password' => '$2y$10$ssjzkveLo5cC10ktCfJgvOtQcKsE0DuRmjijCBciikjPApZRyJHie'
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             'lastname' => 'Owner',
             'date_of_birth' => fake()->date(),
             'last_login_date' => fake()->date(),
-            'cin' => fake()->address(),
+            'cin' => fake()->title(),
             'phone' => substr(fake()->phoneNumber(),10),
             'email' => 'Owner@Owner.Owner',
             'password' => '$2y$10$ssjzkveLo5cC10ktCfJgvOtQcKsE0DuRmjijCBciikjPApZRyJHie'

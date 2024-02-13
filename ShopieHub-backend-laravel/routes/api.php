@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MagazinController;
 use App\Http\Controllers\ownerController;
 use App\Http\Controllers\ProductController;
@@ -41,6 +42,7 @@ Route::middleware(['auth:sanctum', 'ability:admin'])->prefix('admin')->group(sta
 
 Route::middleware(['auth:sanctum', 'ability:owner'])->prefix('owner')->group(static function () {
     Route::apiResource('magazins', MagazinController::class);
+    Route::apiResource('products', ProductController::class);
     Route::get('/producss', [ownerController::class, 'getProductsByMagazinAuth']);
     Route::get('/magazin/{magazinId}/products', [OwnerController::class, 'getProductsByOwnerAndMagazin']);
 
@@ -53,6 +55,8 @@ Route::middleware(['auth:sanctum', 'ability:owner'])->prefix('owner')->group(sta
     });
 });
 Route::apiResource('magazins', MagazinController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner']);
+Route::apiResource('categories', CategoryController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner' , 'ability:admin','ability:buyer']);
+
 
 
 require __DIR__ . '/auth.php';

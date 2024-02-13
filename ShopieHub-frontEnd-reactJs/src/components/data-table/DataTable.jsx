@@ -17,7 +17,7 @@ import {
 } from "../ui/dropdown-menu.jsx";
 import {Button} from "../ui/button.jsx";
 
-export function DataTable({columns, data}) {
+export function DataTable({columns, data , filterKey}) {
   const [sorting, setSorting] = useState([])
   const [columnFilters, setColumnFilters] = useState([])
   const [columnVisibility, setColumnVisibility] = useState({})
@@ -39,12 +39,12 @@ export function DataTable({columns, data}) {
 
   return (
     <>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 mt-5">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue()) ?? ""}
+          placeholder={`Filter by ${filterKey} ...`}
+          value={(table.getColumn(filterKey)?.getFilterValue()) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn(filterKey)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

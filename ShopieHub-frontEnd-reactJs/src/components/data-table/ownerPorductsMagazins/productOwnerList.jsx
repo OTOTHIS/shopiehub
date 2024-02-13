@@ -26,6 +26,7 @@ import { Loader } from "lucide-react";
 
 import { useEffect, useState } from "react";
 import OwnerApi from "../../../services/Api/OwnerApi.js";
+import { ProductMagazinOwnerColumns } from "./ProdcutOwnerColumns.jsx.jsx";
 
 export default function ProductMagazinOwnerList() {
   const [data, setData] = useState([]);
@@ -36,7 +37,9 @@ export default function ProductMagazinOwnerList() {
       try {
         setLoading(true);
         const response = await OwnerApi.all();
+        alert(response.data)
         setData(response.data);
+    
       } catch (error) {
       } finally {
         setLoading(false);
@@ -48,6 +51,7 @@ export default function ProductMagazinOwnerList() {
 
   return (
     <>
+    
       {loading ? (
         <div class="h-56 flex items-center   justify-center w-96 mx-auto">
           <Loader
@@ -56,7 +60,12 @@ export default function ProductMagazinOwnerList() {
           />
         </div>
       ) : (
-        <DataTable columns={AdminOwnerColumns} data={data} />
+          
+       data.map(v=> {
+        <li>v</li>
+       })
+
+        // <DataTable columns={ProductMagazinOwnerColumns} data={data} />
       )}
     </>
   );

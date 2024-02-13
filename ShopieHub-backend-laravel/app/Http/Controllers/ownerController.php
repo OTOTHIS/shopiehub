@@ -37,23 +37,69 @@ class ownerController extends Controller
   }
 
 
-  public function getProductsByOwnerAndMagazin($magazinId=20)
+  // public function getProductsByOwnerAndMagazin($magazinId=20)
+  // {
+  //    $ownerId = auth()->user()->getAuthIdentifier() ;
+  //     // Get the owner by ID
+  //     $owner = Owner::findOrFail($ownerId);
+
+  //     // Get the magazin by ID, associated with the specified owner
+  //     $magazin = $owner->magazins()->findOrFail($magazinId);
+
+  //     // Get all products with categories for the specified magazin
+  //     $products = $magazin->products()->with(['category' => function ($query) {
+  //       $query->select('id', 'name');
+  //   }])->get();
+
+  //     return response()->json(['data' => $products]);
+  // }
+
+
+  public function getProductsByOwnerAndMagazin($magazinId = 20)
   {
-     $ownerId = auth()->user()->getAuthIdentifier() ;
-      // Get the owner by ID
+      $ownerId = auth()->user()->getAuthIdentifier();
+  
       $owner = Owner::findOrFail($ownerId);
-
-      // Get the magazin by ID, associated with the specified owner
       $magazin = $owner->magazins()->findOrFail($magazinId);
-
-      // Get all products with categories for the specified magazin
+  
       $products = $magazin->products()->with(['category' => function ($query) {
-        $query->select('id', 'name');
-    }])->get();
-
+          $query->select('id', 'name');
+      }])->get();
+  
+   $products->transform(function ($product) {
+    // Remove "images/" from the image path stored in the database
+    $imagePathWithoutImages = str_replace('images/', '', $product->image);
+    
+    // Adjust the image URL based on the modified path
+    $product->image_url = asset("storage/{$imagePathWithoutImages}");
+    
+    return $product;
+});
+  
       return response()->json(['data' => $products]);
   }
 
+
+  // public function getProductsByOwnerAndMagazin($magazinId = 20)
+  // {
+  //     $ownerId = auth()->user()->getAuthIdentifier();
+  
+  //     $owner = Owner::findOrFail($ownerId);
+  //     $magazin = $owner->magazins()->findOrFail($magazinId);
+  
+  //     $products = $magazin->products()->with(['category' => function ($query) {
+  //         $query->select('id', 'name');
+  //     }])->get();
+  
+  //     $products->transform(function ($product) {
+  //         // Adjust the image URL based on the database structure
+  //         $product->image_url = asset("/storage/{$product->image}");
+  //         return $product;
+  //     });
+  
+  //     return response()->json(['data' => $products]);
+  // }
+  
   public function showOwnerMagazins($ownerId)
   {
       // Find the owner by ID

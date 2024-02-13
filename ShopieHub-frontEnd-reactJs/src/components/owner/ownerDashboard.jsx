@@ -1,10 +1,7 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Button } from "../ui/button";
 import { CalendarDateRangePicker } from "./ownerComponents/date-range-picker";
-import { MainNav } from "./ownerComponents/main-nav";
-import { Search } from "./ownerComponents/search";
-import TeamSwitcher from "./ownerComponents/team-switcher";
-import { UserNav } from "./ownerComponents/user-nav";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { RecentSales } from "./ownerComponents/recent-sales";
 import { Overview } from "./ownerComponents/overview";
@@ -31,10 +28,10 @@ export default function DashboardPage() {
           <Tabs defaultValue="overview" className="space-y-4">
             <TabsList>
               <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="analytics" disabled>
+              <TabsTrigger value="analytics" >
                 Analytics
               </TabsTrigger>
-              <TabsTrigger value="reports" disabled>
+              <TabsTrigger value="reports" >
                 Reports
               </TabsTrigger >
               <TabsTrigger value="notifications" disabled>

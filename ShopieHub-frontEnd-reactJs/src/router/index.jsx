@@ -12,7 +12,8 @@ import ManageOwners from "../components/Admin/ManageOwners.jsx";
 import OwnerDashboardLayout from "../layouts/OwnerDashboardLayout.jsx";
 import OwnerDashboard from "../components/owner/ownerDashboard.jsx";
 import OwnerMagazinDashboard from "../components/owner/ownerMagazinDashboard.jsx";
-import ProductMagazinDashbord from "../components/owner/productMagazinDashbord.jsx";
+import ProductMagazinDashbord from "../components/owner/productsOwnerMangaer/productMagazinDashbord.jsx";
+import CreateProdcutOwner from "../components/owner/productsOwnerMangaer/createProdcutOwner.jsx";
 
 export const LOGIN_ROUTE = '/login'
 export const User_DASHBOARD_ROUTE = '/User/dashboard'
@@ -22,6 +23,7 @@ export const ADMIN_MANAGE_OWNER_ROUTE = ADMIN_BASE_ROUTE + '/manage-owners'
 export const OWNER_DASHBOARD_ROUTE = '/owner/dashboard'
 export const OWNER_MAGAZIN_ROUTE = '/owner/magazins'
 export const OWNER_MAGAZIN_PRODUCT_ROUTE = '/owner/products'
+export const OWNER_MAGAZIN_CREATE_PRODUCT_ROUTE = '/owner/products/create'
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +88,10 @@ export const router = createBrowserRouter([
       {
         path: OWNER_MAGAZIN_PRODUCT_ROUTE,
         element: <ProductMagazinDashbord/>
+      },
+      {
+        path:OWNER_MAGAZIN_CREATE_PRODUCT_ROUTE,
+        element: <CreateProdcutOwner/>
       },
     ]
   }

@@ -12,9 +12,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = category::all();
+        return response()->json( $data, 200);
     }
-
     /**
      * Store a newly created resource in storage.
      */
