@@ -16,6 +16,35 @@ class ProductController extends Controller
 
     }
 
+    // public function getProductsForHomePage()
+    // {
+    //     $products = Product::with('category', 'magazins');
+    //    $pr = $products->take(5);
+    //     return response()->json(['products' => $pr], 200);
+    // }
+
+    public function getProductsForHomePage()
+{
+    $products = Product::with('category', 'magazins')
+        ->has('category') // Only products with a valid category relationship
+        ->has('magazins') // Only products with a valid magazin relationship
+        ->take(5)
+        ->get();
+
+    $transformedProducts = $products->map(function ($product) {
+        return [
+            'image' => $product->image,
+            'title' => $product->title,
+            'id' => $product->id,
+            'price' => $product->price,
+            'category_name' => optional($product->category)->name,
+            'magazin_name' => optional($product->magazins)->name,
+        ];
+    });
+
+    return response()->json(['data' => $transformedProducts], 200);
+}
+
     /**
      * Store a newly created resource in storage.
      */

@@ -16,7 +16,10 @@ class magazin extends Model
     {
         return $this->hasOne(product::class,'magazin_id');
     }
-
+    public function magazins()
+    {
+        return $this->belongsTo(Magazin::class, 'magazin_id');
+    }
 
 
 

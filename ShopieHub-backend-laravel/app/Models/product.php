@@ -23,6 +23,6 @@ class product extends Model
 
     public function magazins()
     {
-        return $this->belongsTo(magazin::class);
+        return $this->belongsTo(Magazin::class, 'magazin_id');
     }
 }

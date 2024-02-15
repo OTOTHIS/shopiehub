@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/getProductsForHomePage', [ProductController::class, 'getProductsForHomePage']);
 
 Route::middleware(['auth:sanctum', 'ability:buyer'])->prefix('buyer')->group(static function () {
     Route::get('/', function (Request $request) {
