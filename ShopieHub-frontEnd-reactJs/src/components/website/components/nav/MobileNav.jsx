@@ -6,7 +6,7 @@ import { Menu, X } from 'lucide-react'
 
 
 import { useEffect, useState } from 'react'
-import { PRODUCT_CATEGORIES } from '../../../config';
+import { PRODUCT_CATEGORIES } from '../../../../config';
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false)

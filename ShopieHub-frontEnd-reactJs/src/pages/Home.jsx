@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import MaxWidthWrapper from '../components/website/components/MaxWidthWrapper'
 import { Link } from 'react-router-dom'
-import ProductReel from '../components/website/components/ProductReel'
+import ProductReel from '../components/website/components/product/ProductReel'
 
 
 const perks = [

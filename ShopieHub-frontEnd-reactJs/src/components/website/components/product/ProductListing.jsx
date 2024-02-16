@@ -2,11 +2,9 @@
 
 
 import { useEffect, useState } from 'react'
-import { Skeleton } from '../../ui/skeleton'
+import { Skeleton } from '../../../ui/skeleton'
 
 import { cn, formatPrice } from '@/lib/utils'
-
-import ImageSlider from './ImageSlider'
 import { Link } from 'react-router-dom'
 
 
@@ -38,14 +36,14 @@ const ProductListing = ({
 
   if (isVisible && product) {
     return (
-      <Link
+      <a href={`/products/${product.id}/product`}
         className={cn(
           'invisible h-full w-full cursor-pointer group/main',
           {
             'visible animate-in fade-in-5': isVisible,
           }
         )}
-        to={`/products/${product.id}/product`}>
+       >
         <div className='flex flex-col w-full'>
           {/* <ImageSlider urls={validUrls} /> */}
          <img src={product.image} />
@@ -59,7 +57,7 @@ const ProductListing = ({
             {formatPrice(product.price)}
           </p>
         </div>
-      </Link>
+      </a>
     )
   }
 }

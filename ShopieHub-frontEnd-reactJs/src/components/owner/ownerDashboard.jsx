@@ -4,7 +4,7 @@ import { CalendarDateRangePicker } from "./ownerComponents/date-range-picker";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { RecentSales } from "./ownerComponents/recent-sales";
-import { Overview } from "./ownerComponents/overview";
+import Overview from "./ownerComponents/overview";
 
 
 

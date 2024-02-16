@@ -13,37 +13,71 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $data = Product::getPaginatedProducts(5);
+    
+        // Transform the structure as needed
+        $transformedData = $data->map(function ($product) {
+            return [
+                'image' => $product->image,
+                'title' => $product->title,
+                'id' => $product->id,
+                'price' => $product->price,
+                'category_name' => optional($product->category)->name,
+                'magazin_name' => optional($product->magazins)->name,
+            ];
+        });
+    
+        $pagination = [
+            'current_page' => $data->currentPage(),
+            'last_page' => $data->lastPage(),
+            'total' => $data->total(),
+            'per_page' => $data->perPage(),
+            'prev_page_url' => $data->previousPageUrl(),
+            'next_page_url' => $data->nextPageUrl(),
+            'path' => $data->path(),
+            'from' => $data->firstItem(),
+            'to' => $data->lastItem(),
+        ];
+    
+        return response()->json(['data' => $transformedData, 'pagination' => $pagination], 200);
+    }
+    public function getProductsForHomePage()
+    {
+        $products = Product::with('category', 'magazins')
+            ->has('category') // Only products with a valid category relationship
+            ->has('magazins') // Only products with a valid magazin relationship
+            ->take(5)
+            ->get();
 
+        $transformedProducts = $products->map(function ($product) {
+            return [
+                'image' => $product->image,
+                'title' => $product->title,
+                'id' => $product->id,
+                'price' => $product->price,
+                'category_name' => optional($product->category)->name,
+                'magazin_name' => optional($product->magazins)->name,
+            ];
+        });
+
+        return response()->json(['data' => $transformedProducts], 200);
     }
 
-    // public function getProductsForHomePage()
-    // {
-    //     $products = Product::with('category', 'magazins');
-    //    $pr = $products->take(5);
-    //     return response()->json(['products' => $pr], 200);
-    // }
+    public function getProductsForDetailsPage($id)
+    {
 
-    public function getProductsForHomePage()
-{
-    $products = Product::with('category', 'magazins')
-        ->has('category') // Only products with a valid category relationship
-        ->has('magazins') // Only products with a valid magazin relationship
-        ->take(5)
-        ->get();
 
-    $transformedProducts = $products->map(function ($product) {
-        return [
-            'image' => $product->image,
-            'title' => $product->title,
-            'id' => $product->id,
-            'price' => $product->price,
-            'category_name' => optional($product->category)->name,
-            'magazin_name' => optional($product->magazins)->name,
-        ];
-    });
 
-    return response()->json(['data' => $transformedProducts], 200);
-}
+        $data = product::with('category', 'magazins')->where("id", $id)->first();
+        return response()->json([
+            'image' => $data->image,
+            'title' => $data->title,
+            'id' => $data->id,
+            'price' => $data->price,
+            'category_name' => optional($data->category)->name,
+            'magazin_name' => optional($data->magazins)->name,
+        ], 200);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -96,7 +130,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-//     public function destroy(Product $product)
+    //     public function destroy(Product $product)
 // {
     // Delete the product
     // $product->delete();
@@ -105,35 +139,32 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-      
 
-      $file_path = $product->image ;
-    //   $img = "images/products/ypSqWRtx7EbHfNynnmgcpBu1jCtGz09altoCsQor.png" ;
-    
+
+        $file_path = $product->image;
+        //   $img = "images/products/ypSqWRtx7EbHfNynnmgcpBu1jCtGz09altoCsQor.png" ;
+
         // If the image path exists, attempt to delete the corresponding image file
-        if ( $file_path ) {
+        if ($file_path) {
             try {
 
-        // Delete the image
-        if (Storage::disk('local')->exists($file_path)) {
-            Storage::disk('local')->delete($file_path);
-    $product->delete();
-    // Image deleted successfully
-} else {
-    return response()->json(['message' => 'file not exist'],404);
-}
-        
+                // Delete the image
+                if (Storage::disk('local')->exists($file_path)) {
+                    Storage::disk('local')->delete($file_path);
+                    $product->delete();
+                    // Image deleted successfully
+                } else {
+                    return response()->json(['message' => 'file not exist'], 404);
+                }
+
             } catch (\Exception $e) {
                 // Log or handle the exception as needed
                 \Log::error("Error deleting image: {$e->getMessage()}");
             }
         }
-    
+
         return response()->json(['message' => 'Product and associated image deleted successfully']);
     }
-
-
-
 
 
 

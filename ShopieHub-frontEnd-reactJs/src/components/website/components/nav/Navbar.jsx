@@ -1,13 +1,13 @@
-import { Icons } from "./Icons";
+import { Icons } from "../Icons";
 import NavItems from "./NavItems";
-import { buttonVariants } from "../../ui/button";
-import Cart from "./Cart";
+import { buttonVariants } from "../../../ui/button";
+import Cart from "../Cart";
 
-import UserAccountNav from "./UserAccountNav";
+import UserAccountNav from "../UserAccountNav";
 import MobileNav from "./MobileNav";
-import MaxWidthWrapper from "./MaxWidthWrapper";
+import MaxWidthWrapper from "../MaxWidthWrapper";
 import { Link } from "react-router-dom";
-import { useUserContext } from "../../../context/UserContext";
+import { useUserContext } from "../../../../context/UserContext";
 // Add the correct path to your user context hook
 
 const Navbar = () => {

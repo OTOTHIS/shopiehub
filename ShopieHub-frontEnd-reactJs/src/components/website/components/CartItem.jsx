@@ -1,27 +1,24 @@
 import { PRODUCT_CATEGORIES } from '@/config'
-import { useCart } from '@/hooks/use-cart'
-import { formatPrice } from '@/lib/utils'
+
 
 import { FileJson, X } from 'lucide-react'
+import { useCart } from '../../../hooks/use-cart'
+import { formatPrice } from '../../../lib/utils'
 
 
 const CartItem = ({ product }) => {
-  const { img } = product.imgs[0]
-
+  // const { img } = product.imgs[0]
   const { removeItem } = useCart()
 
-  const label = PRODUCT_CATEGORIES.find(
-    ({ value }) => value === product.category
-  )?.label
 
   return (
     <div className='space-y-3 py-2'>
       <div className='flex items-start justify-between gap-4'>
         <div className='flex items-center space-x-4'>
           <div className='relative aspect-square h-16 w-16 min-w-fit overflow-hidden rounded'>
-            {typeof img !== 'string' && img.url ? (
+            {typeof product.image === 'string' && product.image ? (
               <img
-                src={img.url}
+                src={product.image}
                 alt={product.name}
                 fill
                 className='absolute object-cover'
@@ -42,7 +39,7 @@ const CartItem = ({ product }) => {
             </span>
 
             <span className='line-clamp-1 text-xs capitalize text-muted-foreground'>
-              {label}
+              {/* {label} */}
             </span>
 
             <div className='mt-4 text-xs text-muted-foreground'>

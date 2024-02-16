@@ -2,8 +2,8 @@
 
 
 import { Link } from 'react-router-dom'
-import { cn } from '../../../lib/utils'
-import { Button } from '../../ui/button'
+import { cn } from '../../../../lib/utils'
+import { Button } from '../../../ui/button'
 import { ChevronDown } from 'lucide-react'
 
 

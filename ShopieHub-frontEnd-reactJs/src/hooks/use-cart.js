@@ -7,7 +7,16 @@ export const useCart = create()(
       items: [],
       addItem: (product) =>
         set((state) => {
-          return { items: [...state.items, { product }] };
+          // Check if the product is already in the cart
+          const isProductInCart = state.items.some((item) => item.product.id === product.id);
+
+          // If the product is not in the cart, add it
+          if (!isProductInCart) {
+            return { items: [...state.items, { product }] };
+          }
+
+          // If the product is already in the cart, you can update its quantity or handle it as needed
+          return { items: state.items };
         }),
       removeItem: (id) =>
         set((state) => ({

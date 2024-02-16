@@ -14,6 +14,8 @@ import OwnerDashboard from "../components/owner/ownerDashboard.jsx";
 import OwnerMagazinDashboard from "../components/owner/ownerMagazinDashboard.jsx";
 import ProductMagazinDashbord from "../components/owner/productsOwnerMangaer/productMagazinDashbord.jsx";
 import CreateProdcutOwner from "../components/owner/productsOwnerMangaer/createProdcutOwner.jsx";
+import ProductPageDetail from "../components/website/components/product/productPageDetail.jsx";
+import ProductsPage from "../components/website/components/product/productsPage.jsx";
 
 export const LOGIN_ROUTE = '/login'
 export const User_DASHBOARD_ROUTE = '/User/dashboard'
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home/>
+      },
+      {
+        path: '/products/:id/product',
+        element: <ProductPageDetail />
+      },
+      {
+        path: '/products',
+        element: <ProductsPage />
       },
       {
         path: '*',

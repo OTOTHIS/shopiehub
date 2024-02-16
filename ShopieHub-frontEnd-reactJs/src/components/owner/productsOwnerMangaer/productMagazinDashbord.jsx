@@ -26,6 +26,7 @@ import MagazinApi from "../../../services/Api/magazinApi";
 import { useEffect, useState } from "react";
 import { DataTable } from "../../data-table/DataTable";
 import { ProductMagazinOwnerColumns } from "../../data-table/ownerPorductsMagazins/ProdcutOwnerColumns";
+import { cn } from "../../../lib/utils";
 
 const FormSchema = z.object({
   magazin: z.string({
@@ -36,8 +37,10 @@ const FormSchema = z.object({
 
 const ProductMagazinDashbord = () => {
   const [magazins, setMagazins] = useState([]);
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     MagazinApi.all()
@@ -62,13 +65,12 @@ const ProductMagazinDashbord = () => {
 
   function onSubmit(data) {
     
- 
 
       const fetchData = async () => {
         try {
           setLoading(true);
+          setShow(true);
           const response = await MagazinApi.getPoducts(parseInt(data.magazin));
-        console.log(response.data.data)
           setProducts(response.data.data);
         } catch (error) {
           console.log(error)
@@ -103,7 +105,7 @@ const ProductMagazinDashbord = () => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a verified magazin to display" />
+                        <SelectValue placeholder="Select Votre magazin" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -124,7 +126,7 @@ const ProductMagazinDashbord = () => {
         <div className="h-56 flex items-center   justify-center w-96 mx-auto">
           <Loader
             id="loadSubmit"
-            className={"mx-2 my-2 text-2xl animate-spin"}
+            className={cn("mx-2 my-2 text-2xl animate-spin ",show === false ? "hidden":"")}
           />
         </div>
       ) : (

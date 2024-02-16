@@ -6,6 +6,7 @@ use App\Http\Controllers\ownerController;
 use App\Http\Controllers\ProductController;
 use App\Models\Admin;
 use App\Models\Owner;
+use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/getProductsForHomePage', [ProductController::class, 'getProductsForHomePage']);
+Route::get('/getProductsForDetailsPage/{id}', [ProductController::class, 'getProductsForDetailsPage']);
+
+
+
 
 Route::middleware(['auth:sanctum', 'ability:buyer'])->prefix('buyer')->group(static function () {
     Route::get('/', function (Request $request) {
@@ -56,8 +61,16 @@ Route::middleware(['auth:sanctum', 'ability:owner'])->prefix('owner')->group(sta
     });
 });
 Route::apiResource('magazins', MagazinController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner']);
-Route::apiResource('categories', CategoryController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner' , 'ability:admin','ability:buyer']);
+// Route::apiResource('categories', CategoryController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner' , 'ability:admin','ability:buyer']);
+// Route::apiResource('products', CategoryController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner' , 'ability:admin','ability:buyer']);
 
+Route::prefix('v1')->group(function () {
+    Route::get('categories', [CategoryController::class, 'index'])->withoutMiddleware(['auth:sanctum', 'ability:owner', 'ability:admin', 'ability:buyer']);
+    Route::get('categories/{category}', [CategoryController::class, 'show'])->withoutMiddleware(['auth:sanctum', 'ability:owner', 'ability:admin', 'ability:buyer']);
+
+    Route::get('products', [ProductController::class, 'index'])->withoutMiddleware(['auth:sanctum', 'ability:owner', 'ability:admin', 'ability:buyer']);
+    Route::get('products/{product}', [ProductController::class, 'show'])->withoutMiddleware(['auth:sanctum', 'ability:owner', 'ability:admin', 'ability:buyer']);
+});
 
 
 require __DIR__ . '/auth.php';
