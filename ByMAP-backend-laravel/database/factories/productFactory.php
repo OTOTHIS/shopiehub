@@ -27,6 +27,9 @@ class productFactory extends Factory
             'magazin_id' => function () {
                 return \App\Models\magazin::factory()->create()->id;
             },
+            'subcategory_id' => function () {
+                return \App\Models\Subcategory::factory()->create()->id;
+            },
         ];
     }
 }

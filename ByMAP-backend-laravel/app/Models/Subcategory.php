@@ -12,4 +12,12 @@ class Subcategory extends Model
     {
         return $this->hasOne(product::class,'category_id');
     }
+    protected $fillable = [
+        'name',
+        'updated_at',
+        'created_at',
+        "category_id",
+      
+    ];
+    
 }

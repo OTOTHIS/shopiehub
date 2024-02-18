@@ -47,14 +47,10 @@ export default function UserLogin() {
           }
         }
       }).catch(({response}) => {
-     
-      if (response.status === 500) {
-        isSubmitting = false
-        document.getElementById('loadSubmit').classList.remove('animate-spin')
         setError('email', {
           message: 'Email and password not correct ',
         });
-      }
+  
       setError('email', {
         message: response.data.errors.email.join()
       })

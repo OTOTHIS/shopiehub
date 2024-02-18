@@ -7,7 +7,7 @@ import {  DropdownMenu,
   DropdownMenuSeparator,
   DropdownMenuTrigger, } from "../../ui/dropdown-menu";
 import { Button } from "../../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import UserApi from "../../../services/Api/User/UserApi";
 import { useUserContext } from "../../../context/UserContext";
 import { LOGIN_ROUTE } from "../../../router";

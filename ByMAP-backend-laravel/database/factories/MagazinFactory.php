@@ -18,7 +18,7 @@ class MagazinFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'adresse' => fake()->address(),
+          
             'Latitude' => fake()->latitude(),
             'Longitude' => fake()->longitude(),
             'image' => fake()->imageUrl(),
