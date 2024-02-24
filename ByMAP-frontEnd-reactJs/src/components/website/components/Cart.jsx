@@ -88,11 +88,7 @@ const Cart = () => {
               aria-hidden="true"
               className="relative mb-4 h-60 w-60 text-muted-foreground"
             >
-              <img
-                src="/hippo-empty-cart.png"
-                fill
-                alt="empty shopping favorite"
-              />
+            <img className="aspect-square " src="/Bymap.png" />
             </div>
             <div className="text-xl font-semibold">Your favorite is empty</div>
             <SheetTrigger asChild>

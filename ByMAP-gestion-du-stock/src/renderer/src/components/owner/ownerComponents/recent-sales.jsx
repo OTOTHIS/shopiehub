@@ -11,13 +11,15 @@ export function RecentSales() {
 
 
   const [data, setData] = useState([])
+
   useEffect(() => {
     const magazin = parseInt(localStorage.getItem('magazin'))
     async function fetchData() {
       try {
-        const response = await axios.get(`${NODE_URL}/operations/price/${magazin}`)
-
+        const response = await axios.get(`${NODE_URL}/operations/price/${parseInt(magazin)}`)
         setData(response.data)
+ 
+
       } catch (error) {
         console.log(error)
       }
@@ -31,8 +33,8 @@ export function RecentSales() {
     <div className="space-y-8">
 
       {
-        data.map(item => (
-          <div className="flex items-center">
+        data.map((item , index) => (
+          <div key={index} className="flex items-center">
             <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
               <AvatarImage src="/avatars/02.png" alt="Avatar" />
               <AvatarFallback>JL</AvatarFallback>

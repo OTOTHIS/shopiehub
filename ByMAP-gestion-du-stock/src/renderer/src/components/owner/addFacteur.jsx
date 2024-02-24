@@ -62,11 +62,11 @@ const AddFacteur = () => {
  const qte = useRef()
  const  product_id = useRef()
 
-
+const maaga = localStorage.getItem('magazin')
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`${NODE_URL}/products/${11}`)
+        const response = await axios.get(`${NODE_URL}/products/${maaga}`)
 
         setProducts(response.data)
 
@@ -133,8 +133,6 @@ const AddFacteur = () => {
       magazin_id: magaz
     }
 
-console.log(currentFormData) ;
-console.log(operationItem)
 
     // Check if there is an existing entry for the same product_id and type
     const existingIndex = operationItem.findIndex(
@@ -157,7 +155,7 @@ console.log(operationItem)
   };
 
   return (
-    <div className="w-1/3 mx-auto my-10 lg:my-44">
+    <div className="w-full mx-10 my-10">
       <form onSubmit={handleSubmit} className="space-y-8">
 
         <label for="product_id" class="sr-only">Underline select</label>
@@ -284,7 +282,7 @@ console.log(operationItem)
       </TableFooter> */}
       </Table>
 
-      <Button onClick={saveFacture}>Save facture</Button>
+   { (operationItem.length !==0) &&  <Button onClick={saveFacture}>Save facture</Button>}
     </div>
   )
 }

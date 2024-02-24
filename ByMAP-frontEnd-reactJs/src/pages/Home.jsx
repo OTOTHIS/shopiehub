@@ -12,6 +12,8 @@ import MaxWidthWrapper from '../components/website/components/MaxWidthWrapper'
 import { Link } from 'react-router-dom'
 import ProductReel from '../components/website/components/product/ProductReel'
 import NearProducts from '../components/website/components/product/nearProducts'
+import Section1 from '../components/website/components/welcome/section1'
+
 
 
 const perks = [
@@ -39,30 +41,31 @@ export default function Home() {
   return (
     <>
       <MaxWidthWrapper>
-        <div className='py-20 mx-auto text-center flex flex-col items-center max-w-3xl'>
+        {/* <div className='py-20 mx-auto text-center flex flex-col items-center max-w-3xl'>
           <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
-            Your marketplace for high-quality{' '}
+          Transformez Vos Espaces avec des virtual {' '}
             <span className='text-blue-600'>
-              digital assets
+            boutiques Parfaits
             </span>
             .
           </h1>
           <p className='mt-6 text-lg max-w-prose text-muted-foreground'>
-            Welcome to BYMAP. Every asset on our
-            platform is verified by our team to ensure our
-            highest quality standards.
+          Chaque élément sur notre plateforme est vérifié par notre équipe pour garantir nos normes de qualité les plus élevées.
           </p>
           <div className='flex flex-col sm:flex-row gap-4 mt-6'>
             <Link
               to='/products'
               className={buttonVariants()}>
-              Browse Trending
+          Explorer les Tendances
             </Link>
             <Button variant='ghost'>
-              Our quality promise &rarr;
+            La garantie de notre qualité &rarr;
             </Button>
           </div>
-        </div>
+        </div> */}
+
+<Section1  />
+
 
         <ProductReel title='Brand new'/>
         <NearProducts title='Near Products'/>
@@ -70,6 +73,7 @@ export default function Home() {
 
       <section className='border-t border-gray-200 bg-gray-50'>
         <MaxWidthWrapper className='py-20'>
+       
           <div className='grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0'>
             {perks.map((perk) => (
               <div
@@ -92,6 +96,8 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+      
         </MaxWidthWrapper>
       </section>
     </>

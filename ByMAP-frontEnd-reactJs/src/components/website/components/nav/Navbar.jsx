@@ -23,7 +23,8 @@ const Navbar = () => {
 
               <div className="ml-4 flex lg:ml-0">
                 <Link to="/">
-                  <Icons.logo className="h-10 w-10" />
+                 <img className="h-24 w-24 aspect-square mt-4" src="/Bymap.png" />
+                 {/* <Icons.logo className="h-10 w-10" /> */}
                 </Link>
               </div>
 
@@ -50,22 +51,8 @@ const Navbar = () => {
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   )}
 
-                  {user ? (
-                    <UserAccountNav user={user} />
-                  ) : (
-                    <Link
-                      to="/sign-up" // Use "to" instead of "href" for Link component
-                      className={buttonVariants({
-                        variant: "ghost",
-                      })}
-                    >
-                      Create account
-                    </Link>
-                  )}
-
-                  {user ? (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  ) : null}
+          
+              
 
                   {user ? null : (
                     <div className="flex lg:ml-6">

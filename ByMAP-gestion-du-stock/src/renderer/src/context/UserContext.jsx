@@ -9,8 +9,7 @@ export const UserStateContext = createContext({
   magazin: "",
   setUser: () => {
   },
-  logout: () => {
-  },
+ 
   login: (email, password) => {
   },
   setAuthenticated: () => {
@@ -25,28 +24,21 @@ export const UserStateContext = createContext({
 export default function UserContext({children}) {
   const [user, setUser] = useState({})
   const [authenticated, _setAuthenticated] = useState('true' === window.localStorage.getItem('AUTHENTICATED'))
-  const [role, setRole] = useState("owner")
+  const [role] = useState("owner")
   const [magazin, setMagazin] = useState(null)
 
 
   const login = async (email, password) => {
     return UserApi.login(email, password)
   }
-  const logout = () => {
-    setUser({})
-    setAuthenticated(false)
-    // window.localStorage.removeItem('token');
-    
-  }
+
 
   const setAuthenticated = (isAuthenticated) => {
     _setAuthenticated(isAuthenticated)
     window.localStorage.setItem('AUTHENTICATED', isAuthenticated)
   }
 
-  const setToken = (token) => {
-    window.localStorage.setItem('token', token)
-  }
+ 
 
  
 
@@ -54,14 +46,13 @@ export default function UserContext({children}) {
     <UserStateContext.Provider value={{
       user,
       login,
-      logout,
+    
       setUser,
       role,
       magazin,
       setMagazin,
       authenticated,
       setAuthenticated,
-      setToken
     }}>
       {children}
     </UserStateContext.Provider>

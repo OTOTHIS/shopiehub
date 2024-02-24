@@ -6,9 +6,49 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { RecentSales } from './ownerComponents/recent-sales'
 import Overview from './ownerComponents/overview'
 import { useUserContext } from '@/context/UserContext'
-
+import { useEffect, useState } from 'react'
+import axios from "axios"
+import { NODE_URL } from '@/api/axios'
 export default function OwnerDashboard() {
-  const {user} = useUserContext();
+  const { user } = useUserContext();
+  const [count, setCount] = useState(0)
+  const [total, setTotal] = useState(0)
+  const [vendu, SetVendu] = useState(0)
+  const [achet, SetAchet] = useState(0)
+
+  useEffect(() => {
+    const magazin = parseInt(localStorage.getItem('magazin'))
+    const id = parseInt(magazin)
+
+    async function fetchData() {
+      try {
+
+        const countResp = await axios.get(`${NODE_URL}/factures/nombres/${id}`)
+        setCount(countResp.data.nombre)
+
+        const response = await axios.get(`${NODE_URL}/totalPrice/${id}`)
+        const totalRevCount = response.data.reduce((prev, next) => prev + next.total_sum, 0)
+        setTotal(totalRevCount)
+
+
+        const vendus = await axios.get(`${NODE_URL}/totalProd/${id}/+`)
+        SetVendu(vendus.data.prod_Vendu);
+
+        const achets = await axios.get(`${NODE_URL}/totalProd/${id}/-`)
+
+        SetAchet(achets.data.prod_Vendu);
+        // setCount(countResp.data.nombre)
+
+
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+
+    fetchData();
+  }, [])
+
   return (
     <>
       <div className="flex-1 space-y-4 p-8 pt-6">
@@ -16,7 +56,7 @@ export default function OwnerDashboard() {
           <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
           <div className="flex items-center space-x-2">
             <CalendarDateRangePicker />
-            
+
           </div>
         </div>
         <Tabs defaultValue="overview" className="space-y-4">
@@ -47,13 +87,13 @@ export default function OwnerDashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">$45,231.89</div>
+                  <div className="text-2xl font-bold">{total.toLocaleString()} MAD</div>
                   <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
+                  <CardTitle className="text-sm font-medium">Total produit vendu</CardTitle>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -70,7 +110,7 @@ export default function OwnerDashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">+2350</div>
+                  <div className="text-2xl font-bold">{vendu}</div>
                   <p className="text-xs text-muted-foreground">+180.1% from last month</p>
                 </CardContent>
               </Card>
@@ -92,7 +132,7 @@ export default function OwnerDashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">+12,234</div>
+                  <div className="text-2xl font-bold">{achet}</div>
                   <p className="text-xs text-muted-foreground">+19% from last month</p>
                 </CardContent>
               </Card>
@@ -130,7 +170,7 @@ export default function OwnerDashboard() {
               <Card className="col-span-3">
                 <CardHeader>
                   <CardTitle>Recent Sales</CardTitle>
-                  <CardDescription>You made 265 sales this month.</CardDescription>
+                  <CardDescription>You made {count} sales this month.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <RecentSales />

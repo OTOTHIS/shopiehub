@@ -6,18 +6,18 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import {useState} from "react";
-import {Input} from "../ui/input.jsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
+import { useState } from "react";
+import { Input } from "../ui/input.jsx";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger
 } from "../ui/dropdown-menu.jsx";
-import {Button} from "../ui/button.jsx";
+import { Button } from "../ui/button.jsx";
 
-export function DataTable({columns, data , filterKey}) {
+export function DataTable({ columns, data, filterKey }) {
   const [sorting, setSorting] = useState([])
   const [columnFilters, setColumnFilters] = useState([])
   const [columnVisibility, setColumnVisibility] = useState({})

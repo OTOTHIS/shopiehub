@@ -13,7 +13,7 @@ const ProductReel = (props) => {
       try {
         const response = await axiosClient.get("/getProductsForHomePage");
         setProduct(response.data.data);
-        console.log(products)
+    
       } catch (error) {
         console.error(error);
       }

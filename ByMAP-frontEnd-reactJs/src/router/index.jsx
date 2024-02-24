@@ -19,6 +19,7 @@ import OwnerCreateMagazin from "../components/owner/ownerMagazins/ownerCreateMag
 import OwnerMagazinDashboard from "../components/owner/ownerMagazins/ownerMagazinDashboard.jsx";
 import ProductMagazinDashbord from "../components/owner/productsOwnerMangaer/productMagazinDashbord.jsx";
 import Test from "../components/website/components/test.jsx";
+import Section3 from "../components/website/components/welcome/section3.jsx";
 
 export const LOGIN_ROUTE = '/login'
 export const User_DASHBOARD_ROUTE = '/User/dashboard'
@@ -30,6 +31,9 @@ export const OWNER_MAGAZIN_ROUTE = '/owner/magazins'
 export const OWNER_MAGAZIN_PRODUCT_ROUTE = '/owner/products'
 export const OWNER_MAGAZIN_CREATE_PRODUCT_ROUTE = '/owner/products/create'
 export const  OWNER_MAGAZIN_CREATE_MAGAZIN_ROUTE = '/owner/magazins/create'
+
+export const NODE_URL = import.meta.env.VITE_BACKEND_NODE_URL ;
+
 export const router = createBrowserRouter([
   {
     element: <Layout/>,
@@ -49,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: '/test',
         element: <Test />
+      },
+      {
+        path: '/maps',
+        element: <Section3 />
       },
       {
         path: '*',

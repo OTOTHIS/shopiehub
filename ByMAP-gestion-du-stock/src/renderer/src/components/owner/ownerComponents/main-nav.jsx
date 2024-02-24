@@ -6,7 +6,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { ModeToggle } from "../../mode-toggle";
+
 import {
   OWNER_DASHBOARD_ROUTE,
   OWNER_MAGAZIN_PRODUCT_ROUTE,

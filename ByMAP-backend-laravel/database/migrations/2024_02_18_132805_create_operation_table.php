@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('operations', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id');
             $table->enum('type', ['+', '-']);
             $table->integer('qte');
             $table->unsignedBigInteger('product_id'); // Foreign key to products table

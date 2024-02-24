@@ -103,22 +103,7 @@ const MobileNav = () => {
             </div>
 
             <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
-              <div className='flow-root'>
-                <Link
-                  onClick={() => closeOnCurrent('/sign-in')}
-                  href='/sign-in'
-                  className='-m-2 block p-2 font-medium text-gray-900'>
-                  Sign in
-                </Link>
-              </div>
-              <div className='flow-root'>
-                <Link
-                  onClick={() => closeOnCurrent('/sign-up')}
-                  href='/sign-up'
-                  className='-m-2 block p-2 font-medium text-gray-900'>
-                  Sign up
-                </Link>
-              </div>
+          
             </div>
           </div>
         </div>

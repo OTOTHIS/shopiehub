@@ -1,14 +1,15 @@
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, createHashRouter} from "react-router-dom";
 import Login from "../pages/Login.jsx";
 import GuestLayout from "@/layouts/GuestLayout.jsx";
 import OwnerDashboardLayout from "@/layouts/OwnerDashboardLayout.jsx";
 import OwnerDashboard from "../components/owner/ownerDashboard.jsx";
-import OwnerMagazinDashboard from "@/components/owner/ownerMagazins/ownerMagazinDashboard.jsx";
-import ProductMagazinDashbord from "@/components/owner/productsOwnerMangaer/productMagazinDashbord.jsx";
+
 
 
 import SelectMagazin from "@/components/Login/selectMagazin.jsx";
 import AddFacteur from "@/components/owner/addFacteur.jsx";
+import SortieList from "@/components/data-table/factures/facturesSorties/SortieList.jsx";
+import EntreList from "@/components/data-table/factures/facturesEntrees/EntreList.jsx";
 
 
 
@@ -20,7 +21,9 @@ export const OWNER_MAGAZIN_CREATE_PRODUCT_ROUTE = '/owner/products/create'
 export const  OWNER_MAGAZIN_CREATE_MAGAZIN_ROUTE = '/owner/magazins/create'
 export const SELECT_MAGAZIN = "/select"
 export const ADD_FACTEUR = "/owner/addFacteur"
-export const router = createBrowserRouter([
+export const FACTURE_SORTIE_LIST ="/owner/listdesortie"
+export const FACTURE_ENTRE_LIST ="/owner/listdeEntre"
+export const router = createHashRouter([
 
   {
     element: <GuestLayout/>,
@@ -44,17 +47,18 @@ export const router = createBrowserRouter([
         path: OWNER_DASHBOARD_ROUTE,
         element: <OwnerDashboard  />
       },
-      {
-        path: OWNER_MAGAZIN_ROUTE,
-        element: <OwnerMagazinDashboard />
-      },
-      {
-        path: OWNER_MAGAZIN_PRODUCT_ROUTE,
-        element: <ProductMagazinDashbord />
-      },
+   
       {
         path:ADD_FACTEUR,
         element: <AddFacteur />
+      },
+      {
+        path:FACTURE_SORTIE_LIST,
+        element: <SortieList />
+      },
+      {
+        path:FACTURE_ENTRE_LIST,
+        element: <EntreList />
       },
      
     ]

@@ -1,24 +1,29 @@
 import * as z from "zod"
+import axios from "axios" 
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.jsx";
 import {Input} from "@/components/ui/input.jsx";
 import {Button} from "../ui/button.jsx";
 import {useNavigate} from "react-router-dom";
-import {Loader} from "lucide-react";
+
+
 import {useUserContext} from "../../context/UserContext.jsx";
-import { Label } from "@radix-ui/react-dropdown-menu";
+
 import { Icons } from "../icons.jsx";
-import { OWNER_DASHBOARD_ROUTE, SELECT_MAGAZIN } from "@/router/index.jsx";
+import {  SELECT_MAGAZIN } from "@/router/index.jsx";
+import { useState } from "react";
 
 
 const formSchema = z.object({
   email: z.string().email().min(2).max(30),
   password: z.string().min(8).max(30)
 })
+
 export default function UserLogin() {
   const {login, setAuthenticated, setToken , setUser ,  setRole } = useUserContext()
   const navigate = useNavigate()
+  const [magaz , setMagaz] = useState({})
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,16 +33,20 @@ export default function UserLogin() {
   })
   let {setError, formState: {isSubmitting , isLoading}} = form
 
+
   // 2. Define a submit handler.
   const onSubmit = async (values) => {
     try {
-      const { status, data } = await login(values.email, values.password);
+      const { status, data } = await axios.get('http://localhost:9900/api/user/'+values.email);
   
       if (status === 200) {
-        setToken(data.token);
-        setUser(data.user);
+        // setToken(data.token);
+
+          console.log(data)
+
+        setUser(data);
+        localStorage.setItem('user',JSON.stringify(data))
         setAuthenticated(true);
-        const { role } = data.user;
         navigate(SELECT_MAGAZIN)
 
      
@@ -63,6 +72,21 @@ export default function UserLogin() {
     }
   };
 
+
+  // const onSubmit = (values) => {
+   
+
+  //   fetch(")
+  //   .then(response => response.json())
+  //     .then(json => {
+  //       console.log(json)
+  //       setMagaz(json)
+  //       setUser(json)
+  //       setRole('owner')
+  //       navigate(SELECT_MAGAZIN)
+  //     })
+
+  // }
   return <>
 
   
@@ -120,7 +144,7 @@ export default function UserLogin() {
         ) : (
           <Icons.gitHub className="mr-2 h-4 w-4" />
         )}{" "}
-        GitHub
+        GitHub {magaz.id}
       </Button>
     </Form>
   

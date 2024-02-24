@@ -1,196 +1,145 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { axiosClient } from '../../../../api/axios';
-// import {
-//   Pagination,
-//   PaginationContent,
-//   PaginationItem,
-//   PaginationLink,
-//   PaginationPrevious,
-//   PaginationNext,
-//   PaginationEllipsis,
-// } from '@/components/ui/pagination';
-// import { Link , useLocation  } from 'react-router-dom';
-// import { cn } from '../../../../lib/utils';
-// import { buttonVariants } from '../../../ui/button';
-
-// const ProductPage = () => {
-//   const [products, setProducts] = useState([]);
-//   const [pagination, setPagination] = useState({});
-//   const [currentPage, setCurrentPage] = useState(1);
-
-//   useEffect(() => {
-//     fetchProducts(currentPage);
-//   }, [currentPage]);
-
-//   const fetchProducts = async (page) => {
-//     const location = useLocation();
-//     const queryParams = new URLSearchParams(location.search);
-//     const category = queryParams.get('category');
 
 
-//     try {
-
-//       const response = await axiosClient.get(`/v1/products?page=${page}`);
-//       const { data, pagination } = response.data;
-//       setProducts(data);
-//       setPagination(pagination);
-//     } catch (error) {
-//       console.error('Error fetching data:', error);
-//     }
-//   };
-
-//   const handlePageChange = (newPage) => {
-//     setCurrentPage(newPage);
-//   };
-
-//   const generatePaginationItems = () => {
-//     const items = [];
-//     for (let i = 1; i <= pagination.last_page; i++) {
-//       items.push(
-//         <PaginationItem key={i}>
-//           <PaginationLink className={cn(currentPage === i && buttonVariants())}  onClick={() => {
-//             handlePageChange(i)
-//             window.scrollTo(0)
-//           }} active={currentPage === i}>
-//             {i}
-//           </PaginationLink>
-//         </PaginationItem>
-//       );
-//     }
-//     return items;
-//   }; 
-//   return (
-//     <div>
-//       <div className="bg-white">
-//       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-//         <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
-
-//         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-//           {products.map((product) => (
-//             <div key={product.id} className="group relative">
-//               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-//                 <img
-//                   src={product.image}
-//                   alt={product.image}
-//                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-//                 />
-//               </div>
-//               <div className="mt-4 flex justify-between">
-//                 <div>
-//                   <h3 className="text-sm text-gray-700">
-//                     <Link to={`/products/${product.id}/product`}>
-//                       <span aria-hidden="true" className="absolute inset-0" />
-//                       {product.title}
-//                     </Link>
-//                   </h3>
-//                   <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-//                 </div>
-//                 <p className="text-sm font-medium text-gray-900">{product.price}</p>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-
-//       <Pagination className='cursor-pointer'>
-//         <PaginationContent>
-//           <PaginationPrevious  onClick={() => {
-//              handlePageChange(currentPage - 1)
-//              window.scrollTo(0)
-//           }} disabled={!pagination.prev_page_url} />
-//           {generatePaginationItems()}
-//        {
-//          (pagination.next_page_url) &&  <PaginationEllipsis />
-//        }
-       
-//           <PaginationNext  onClick={() => {
-//             handlePageChange(currentPage + 1)
-//             window.scrollTo(0)
-//           }} disabled={!pagination.next_page_url} />
-//         </PaginationContent>
-//       </Pagination>
-//     </div>
-//   );
-// };
-
-// export default ProductPage;
-
-
-
-
-
-import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  FunnelIcon,
+  MinusIcon,
+  PlusIcon,
+  Squares2X2Icon,
+} from "@heroicons/react/20/solid";
+import axios from "axios";
+import { NODE_URL } from "../../../../router";
+import { Link } from "react-router-dom";
+import { Button } from "../../../ui/button";
+import AddToCartButton from "../AddToCartButton";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
-const subCategories = [
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
-  { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
-]
-const filters = [
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-  },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
-    ],
-  },
-  {
-    id: 'size',
-    name: 'Size',
-    options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
-    ],
-  },
-]
+
+  { name: "Newest", href: "new", current: false },
+  { name: "Price: Low to High", href: "asc", current: false },
+  { name: "Price: High to Low", href: "desc", current: false },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function ProductPage() {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [categories, setCategories] = useState([]);
+  const [checkedFilters, setCheckedFilters] = useState({});
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
+  const filters = [
+    {
+      id: "category",
+      name: "Category",
+      options: categories.map((category) => ({
+        id: category.id,
+        value: category.name, // Assuming there is a 'slug' property in the category data
+        label: category.name,
+        checked: false,
+      })),
+    },
+    {
+      id: "size",
+      name: "Size",
+      options: [
+        { value: "2l", label: "2L", checked: false },
+        { value: "6l", label: "6L", checked: false },
+        { value: "12l", label: "12L", checked: false },
+        { value: "18l", label: "18L", checked: false },
+        { value: "20l", label: "20L", checked: false },
+        { value: "40l", label: "40L", checked: true },
+      ],
+    },
+  ];
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+
+const handleSort = async (v) => {
+  const response = await axios.get(
+    `${NODE_URL}/api/products?page=${page}&pageSize=${pageSize}&sort=${v}`
+  );
+  setProducts(response.data);
+}
+
+
+const handleList = () => {
+
+}
+
+  const handleCheckboxChange = (sectionId, optionValue) => {
+    setCheckedFilters((prevFilters) => {
+      const currentSectionFilters = prevFilters[sectionId] || [];
+      const newFilters = {
+        ...prevFilters,
+        [sectionId]: currentSectionFilters.includes(optionValue)
+          ? currentSectionFilters.filter((value) => value !== optionValue)
+          : [...currentSectionFilters, optionValue],
+      };
+      return newFilters;
+    });
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const categoriesResponse = await axios.get(
+          `${NODE_URL}/api/categories`
+        );
+        setCategories(categoriesResponse.data);
+
+        const response = await axios.get(
+          `${NODE_URL}/api/products?page=${page}&pageSize=${pageSize}`
+        );
+        setProducts(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [page, pageSize]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
+
+  const getValues = async () => {
+    let checkeds;
+
+    if (checkedFilters && checkedFilters.category.length === 0) {
+      checkeds = checkedFilters.category;
+    }
+    if (checkedFilters && checkedFilters.category.length > 0) {
+      checkeds = checkedFilters.category.join(",");
+    }
+
+    if (!checkeds || checkeds == undefined || checkeds == null) {
+      const response = await axios.get(`${NODE_URL}/api/products`);
+      setProducts(response.data);
+    } else {
+   
+      const response = await axios.get(
+        `${NODE_URL}/api/products?categories=${checkeds}`
+      );
+      setProducts(response.data);
+    }
+  };
 
   return (
     <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
+          <Dialog
+            as="div"
+            className="relative z-40 lg:hidden"
+            onClose={setMobileFiltersOpen}
+          >
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -215,7 +164,9 @@ export default function ProductPage() {
               >
                 <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                    <h2 className="text-lg font-medium text-gray-900">
+                      Filters
+                    </h2>
                     <button
                       type="button"
                       className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
@@ -229,28 +180,31 @@ export default function ProductPage() {
                   {/* Filters */}
                   <form className="mt-4 border-t border-gray-200">
                     <h3 className="sr-only">Categories</h3>
-                    <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                      {subCategories.map((category) => (
-                        <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
-                            {category.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
 
                     {filters.map((section) => (
-                      <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                      <Disclosure
+                        as="div"
+                        key={section.id}
+                        className="border-t border-gray-200 px-4 py-6"
+                      >
                         {({ open }) => (
                           <>
                             <h3 className="-mx-2 -my-3 flow-root">
                               <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                <span className="font-medium text-gray-900">{section.name}</span>
+                                <span className="font-medium text-gray-900">
+                                  {section.name}
+                                </span>
                                 <span className="ml-6 flex items-center">
                                   {open ? (
-                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                    <MinusIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   ) : (
-                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                    <PlusIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   )}
                                 </span>
                               </Disclosure.Button>
@@ -258,7 +212,10 @@ export default function ProductPage() {
                             <Disclosure.Panel className="pt-6">
                               <div className="space-y-6">
                                 {section.options.map((option, optionIdx) => (
-                                  <div key={option.value} className="flex items-center">
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
                                     <input
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
@@ -290,7 +247,9 @@ export default function ProductPage() {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+              New Arrivals
+            </h1>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
@@ -313,21 +272,24 @@ export default function ProductPage() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute cursor-pointer right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
+                            <h1
+                            onClick={()=> handleSort(option.href)}
                               href={option.href}
                               className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm'
+                                option.current
+                                  ? "font-medium text-gray-900"
+                                  : "text-gray-500",
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm"
                               )}
                             >
                               {option.name}
-                            </a>
+                            </h1>
                           )}
                         </Menu.Item>
                       ))}
@@ -336,9 +298,29 @@ export default function ProductPage() {
                 </Transition>
               </Menu>
 
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+              <button
+                type="button"
+                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
+              >
+
+
+
+
+
+
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
+
+
+
+
+
+
+
+
+
+
+
               </button>
               <button
                 type="button"
@@ -360,26 +342,31 @@ export default function ProductPage() {
               {/* Filters */}
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
 
                 {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
+                  <Disclosure
+                    as="div"
+                    key={section.id}
+                    className="border-b border-gray-200 py-6"
+                  >
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
                           <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
+                            <span className="font-medium text-gray-900">
+                              {section.name}
+                            </span>
                             <span className="ml-6 flex items-center">
                               {open ? (
-                                <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                <MinusIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
                               ) : (
-                                <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                <PlusIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
                               )}
                             </span>
                           </Disclosure.Button>
@@ -387,13 +374,22 @@ export default function ProductPage() {
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
                             {section.options.map((option, optionIdx) => (
-                              <div key={option.value} className="flex items-center">
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
                                 <input
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
                                   type="checkbox"
-                                  defaultChecked={option.checked}
+                                  checked={checkedFilters[section.id]?.includes(
+                                    option.id
+                                  )}
+                                  onChange={() =>
+                                    handleCheckboxChange(section.id, option.id)
+                                  }
+                                  // defaultChecked={option.checked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
@@ -404,6 +400,11 @@ export default function ProductPage() {
                                 </label>
                               </div>
                             ))}
+
+                            <Button type="button" onClick={getValues}>
+                              {" "}
+                              apply filter
+                            </Button>
                           </div>
                         </Disclosure.Panel>
                       </>
@@ -413,11 +414,86 @@ export default function ProductPage() {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3">{/* Your content */}</div>
+              <div className="lg:col-span-3">
+                {
+                  <div className="mt-6 grid grid-cols-1 flex-wrap gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                    {products.map((product) => (
+                      <div key={product.id} className="group relative">
+                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                          <img
+                            src={`${import.meta.env.VITE_BACKEND_URL}/storage/${
+                              product.image
+                            }`}
+                            alt={product.image}
+                            className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                          />
+                        </div>
+                        <div className="mt-4 flex justify-between">
+                          <div>
+                            <h3 className="text-sm text-gray-700">
+                              <Link to={`/products/${product.id}/product`}>
+                                <span
+                                  aria-hidden="true"
+                                  className="absolute inset-0"
+                                />
+                                {product.title}
+                              </Link>
+                            </h3>
+                            <p className="mt-1 text-sm text-gray-500">
+                              {product.color}
+                            </p>
+                          </div>
+                          <p className="text-sm font-medium text-gray-900">
+                            {product.price}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                }
+                <div className="flex justify-center items-center mt-20">
+                  <div className="flex justify-center items-end gap-2">
+                    <div className="">
+                      <Button
+                        className="mx-3"
+                        disabled={page === 1}
+                        onClick={() => handlePageChange(page - 1)}
+                        variant="outline"
+                        size="icon"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      Previous
+                    </div>
+
+                    <Button
+                      className="mx-3"
+                      disabled={page === 1}
+                      variant="outline"
+                      size="icon"
+                    >
+                      {page}
+                    </Button>
+
+                    <div className="mx-2">
+                      Next
+                      <Button
+                        className="mx-3"
+                        disabled={products.length < pageSize}
+                        onClick={() => handlePageChange(page + 1)}
+                        variant="outline"
+                        size="icon"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
         </main>
       </div>
     </div>
-  )
+  );
 }

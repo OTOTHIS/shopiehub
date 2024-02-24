@@ -36,7 +36,7 @@ const [data,setData]=useState([])
 useEffect(() => {
   const magazin = parseInt(localStorage.getItem('magazin'))
  async function fetchData() {
- const response = await axios.get(`${NODE_URL}/products/charts/${magazin}`)
+ const response = await axios.get(`${NODE_URL}/products/charts/${parseInt(magazin)}`)
 
  setData(response.data)
   }
