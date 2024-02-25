@@ -1,6 +1,7 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_interpolation_to_compose_strings, library_private_types_in_public_api, prefer_const_literals_to_create_immutables
+// ignore_for_file: sized_box_for_whitespace, prefer_interpolation_to_compose_strings, library_private_types_in_public_api, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:testv1/animation/FadeAnimation.dart';
 import 'package:testv1/models/product.dart';
@@ -8,6 +9,7 @@ import 'package:testv1/pages/product_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -32,7 +34,7 @@ class _ExplorePageState extends State<ExplorePage>
   List<Color> colors = [
     Colors.black,
     Colors.purple,
-    Colors.orange.shade200,
+    Color.fromRGBO(37, 99, 235, 10),
     Colors.blueGrey,
     const Color(0xFFFFC1D9),
   ];
@@ -41,6 +43,8 @@ class _ExplorePageState extends State<ExplorePage>
   int _selectedSize = 1;
 
   var selectedRange = const RangeValues(150.00, 1500.00);
+  late http.Client client;
+  late http.Response response;
 
   @override
   void initState() {
@@ -49,6 +53,7 @@ class _ExplorePageState extends State<ExplorePage>
     products();
 
     super.initState();
+    client = http.Client();
   }
 
   void _listenToScrollChange() {
@@ -74,28 +79,28 @@ class _ExplorePageState extends State<ExplorePage>
         stretch: true,
         backgroundColor: Colors.grey.shade50,
         flexibleSpace: FlexibleSpaceBar(
-            collapseMode: CollapseMode.pin,
-            titlePadding:
-                const EdgeInsets.only(left: 20, right: 30, bottom: 100),
-            stretchModes: [
-              StretchMode.zoomBackground,
-              // StretchMode.fadeTitle
-            ],
-            title: AnimatedOpacity(
-              opacity: _isScrolled ? 0.0 : 1.0,
-              duration: const Duration(milliseconds: 500),
-              child: FadeAnimation(
-                  1,
-                  const Text("Find your 2021 Collections",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 28.0,
-                      ))),
-            ),
-            background: Image.asset(
-              "assets/images/background.png",
-              fit: BoxFit.cover,
-            )),
+          collapseMode: CollapseMode.pin,
+          titlePadding: const EdgeInsets.only(left: 20, right: 30, bottom: 100),
+          stretchModes: [
+            StretchMode.zoomBackground,
+            // StretchMode.fadeTitle
+          ],
+          title: AnimatedOpacity(
+            opacity: _isScrolled ? 0.0 : 1.0,
+            duration: const Duration(milliseconds: 500),
+            child: FadeAnimation(
+                1,
+                const Text("Find your 2021 Collections",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 28.0,
+                    ))),
+          ),
+          // background: Image.asset(
+          //   "assets/images/.png",
+          //   fit: BoxFit.cover,
+          // )
+        ),
         bottom: AppBar(
           toolbarHeight: 70,
           elevation: 0,
@@ -187,10 +192,7 @@ class _ExplorePageState extends State<ExplorePage>
                         itemCount: productList.length,
                         itemBuilder: (context, index) {
                           return productCart(productList[index]);
-                        }
-                        )
-                        )
-
+                        }))
               ])),
           Container(
               padding: const EdgeInsets.only(top: 20, left: 20),
@@ -303,7 +305,6 @@ class _ExplorePageState extends State<ExplorePage>
   }
 
   Future<void> products() async {
-
     try {
       final response =
           await http.get(Uri.parse('http://localhost:9900/api/products'));
@@ -363,10 +364,8 @@ class _ExplorePageState extends State<ExplorePage>
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
                               child: Image.network(
-                                  // "http://127.0.0.1:8000/storage/" +
-                                  //     product.image,
-                                  "http://127.0.0.1:8000/storage/images/products/T4VzVakzIiE810NP50WxPneQbeSdsM1cSxth4gq2.jpg",
-                                  fit: BoxFit.cover)),
+                                  "http://127.0.0.1:9900/images?id=${product.image}",
+                                  fit: BoxFit.contain)),
                         ),
                         // Add to cart button
                         Positioned(
@@ -416,7 +415,7 @@ class _ExplorePageState extends State<ExplorePage>
                             ? '${product.description.substring(0, 20)}...'
                             : product.description,
                         style: TextStyle(
-                          color: Colors.orange.shade400,
+                          color: Color.fromRGBO(37, 99, 235, 6),
                           fontSize: 14,
                         ),
                       ),
@@ -463,8 +462,23 @@ class _ExplorePageState extends State<ExplorePage>
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Image.network(
-                          "http://127.0.0.1:8000/storage/" + product.image,
-                          fit: BoxFit.cover)),
+                          "http://127.0.0.1:9900/images?id=${product.image}",
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          // Display a loading indicator while the image is loading
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      (loadingProgress.expectedTotalBytes ?? 1)
+                                  : null,
+                            ),
+                          );
+                        }
+                      })),
                 ),
                 const SizedBox(
                   width: 10,
@@ -487,7 +501,7 @@ class _ExplorePageState extends State<ExplorePage>
                         Text(
                           product.description,
                           style: TextStyle(
-                            color: Colors.orange.shade400,
+                            color: Color.fromRGBO(37, 99, 235, 4),
                             fontSize: 13,
                           ),
                         ),
@@ -628,7 +642,7 @@ class _ExplorePageState extends State<ExplorePage>
                           margin: const EdgeInsets.only(right: 10),
                           decoration: BoxDecoration(
                               color: _selectedSize == index
-                                  ? Colors.yellow[800]
+                                  ? Color.fromRGBO(37, 99, 235, 7)
                                   : Colors.grey.shade200,
                               shape: BoxShape.circle),
                           width: 40,
@@ -690,7 +704,7 @@ class _ExplorePageState extends State<ExplorePage>
                     max: 2000.00,
                     divisions: 100,
                     inactiveColor: Colors.grey.shade300,
-                    activeColor: Colors.yellow[800],
+                    activeColor: Color.fromRGBO(37, 99, 235, 6),
                     labels: RangeLabels(
                       '\$ ${selectedRange.start.toStringAsFixed(2)}',
                       '\$ ${selectedRange.end.toStringAsFixed(2)}',
@@ -797,7 +811,7 @@ class _ExplorePageState extends State<ExplorePage>
                                 margin: const EdgeInsets.only(right: 10),
                                 decoration: BoxDecoration(
                                     color: _selectedSize == index
-                                        ? Colors.yellow[800]
+                                        ? Color.fromRGBO(37, 99, 235, 7)
                                         : Colors.grey.shade200,
                                     shape: BoxShape.circle),
                                 width: 40,
@@ -847,9 +861,9 @@ class _ExplorePageState extends State<ExplorePage>
       onPressed: () => onPressed(),
       height: 50,
       elevation: 0,
-      splashColor: Colors.yellow[700],
+      splashColor: Color.fromRGBO(37, 99, 235, 7),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      color: Colors.yellow[800],
+      color: Color.fromRGBO(37, 99, 235, 7),
       child: Center(
         child: Text(
           text,

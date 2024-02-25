@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables
 
+import 'package:flutter/widgets.dart';
 import 'package:testv1/models/product.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                 StretchMode.blurBackground,
               ],
               background: Image.network(
-                "http://127.0.0.1:8000/storage/" + widget.product.image,
+                "http://localhost:9900/images?id=" + widget.product.image,
                 fit: BoxFit.cover,
               )),
           bottom: PreferredSize(
@@ -79,7 +80,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
         SliverList(
             delegate: SliverChildListDelegate([
           Container(
-              height: MediaQuery.of(context).size.height * 0.55,
+              height: MediaQuery.of(context).size.height * 0.6,
               color: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Column(
@@ -92,13 +93,23 @@ class _ProductViewPageState extends State<ProductViewPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.product.title,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            child: Text(
+                              breakText(widget.product.title, 30),
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                          ),
+                          Text(
+                            "\$ " + widget.product.price.toString() + '.00',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 5,
@@ -106,15 +117,11 @@ class _ProductViewPageState extends State<ProductViewPage> {
                           Text(
                             " widget.product.description",
                             style: TextStyle(
-                              color: Colors.orange.shade400,
+                              color: Color.fromRGBO(37, 99, 235, 7),
                               fontSize: 14,
                             ),
                           ),
                         ],
-                      ),
-                      Text(
-                        "\$ " + widget.product.price.toString() + '.00',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
                       ),
                     ],
                   ),
@@ -201,7 +208,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                             margin: EdgeInsets.only(right: 10),
                             decoration: BoxDecoration(
                                 color: _selectedSize == index
-                                    ? Colors.yellow[800]
+                                    ? Color.fromRGBO(37, 99, 235, 10)
                                     : Colors.grey.shade200,
                                 shape: BoxShape.circle),
                             width: 40,
@@ -230,10 +237,10 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     },
                     height: 50,
                     elevation: 0,
-                    splashColor: Colors.yellow[700],
+                    splashColor: Color.fromRGBO(37, 99, 235, 10),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    color: Colors.yellow[800],
+                    color: Color.fromRGBO(37, 99, 235, 10),
                     child: Center(
                       child: Text(
                         "Add to Cart",
@@ -246,5 +253,16 @@ class _ProductViewPageState extends State<ProductViewPage> {
         ])),
       ]),
     );
+  }
+
+  String breakText(String text, int breakLength) {
+    if (text.length <= breakLength) {
+      return text;
+    }
+
+    String firstLine = text.substring(0, breakLength);
+    String remainingText = text.substring(breakLength);
+
+    return '$firstLine\n$remainingText';
   }
 }

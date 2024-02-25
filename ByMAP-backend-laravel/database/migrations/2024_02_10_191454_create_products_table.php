@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
+            $table->integer('views')->default(0);
             $table->float('price');
             $table->string('image');
             $table->foreignIdFor(magazin::class)->constrained()->cascadeOnDelete();

@@ -8,7 +8,8 @@ import { formatPrice } from '../../../../lib/utils';
 import AddToCartButton from '../AddToCartButton';
 import ProductReel from './ProductReel';
 import { Skeleton } from '../../../ui/skeleton';
-
+import { NODE_URL } from '../../../../router';
+import axios from 'axios'
 
 
 const BREADCRUMBS = [
@@ -16,12 +17,30 @@ const BREADCRUMBS = [
   { id: 2, name: 'Products', href: '/products' },
 ]
 
+const backend_URL = import.meta.env.VITE_BACKEND_URL
 const ProductPageDetail =  () => {
     let {id} = useParams();
-    const [product,setProduct] = useState([])
+    const [product,setProduct] = useState({})
+
+
+ 
  useEffect(() => {
    
-    ProductApi.get(id).then(res=> setProduct(res.data)).catch(err=>console.log(err))
+
+  const handleProducts = async () => {
+
+    // /incrementViews
+
+    const response = await axios.get(`${NODE_URL}/api/products/${id}/product`);
+ 
+    setProduct(response.data);
+
+    const total = await axios.post(`${NODE_URL}/api/incrementViews`,{productId:id})
+    console.log(total.data)
+  }
+  
+  handleProducts();
+    //  ProductApi.get(id).then(res=> setProduct(res.data)).catch(err=>console.log(err))
  
  
  }, [])
@@ -109,7 +128,7 @@ const ProductPageDetail =  () => {
           <div className='aspect-square rounded-lg'>
             {product.image ? (
               // <ImageSlider urls={validUrls} />
-              <img src={product.image} alt={product.name} />
+              <img src={` ${backend_URL}/storage/${product.image}`} alt={product.name} />
             ) : (
               <Skeleton height={300} width={300} className="h-64 w-64" />
             )}
@@ -121,6 +140,7 @@ const ProductPageDetail =  () => {
           <div>
             <div className='mt-10'>
               {product.image ? (
+                
                 <AddToCartButton product={product} />
               ) : (
                 <Skeleton height={40} width={200} className="h-10 w-40" />

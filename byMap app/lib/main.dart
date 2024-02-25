@@ -1,7 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:io';
-
 import 'package:testv1/pages/cart.dart';
 import 'package:testv1/pages/explore.dart';
 // ignore: unused_import
@@ -11,15 +9,11 @@ import 'package:testv1/pages/search.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 
-
-
-
 void main() {
   runApp(const MaterialApp(
     home: HomePage(),
     debugShowCheckedModeBanner: false,
   ));
- 
 }
 
 class HomePage extends StatefulWidget {
@@ -82,13 +76,13 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.highlight),
             title: Text('Highlights'),
           ),
-          FlashyTabBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
-          ),
+          // FlashyTabBarItem(
+          //   icon: Icon(Icons.settings),
+          //   title: Text('Settings'),
+          // ),
           FlashyTabBarItem(
             icon: Icon(Icons.card_travel),
-            title: Text('Cart'),
+            title: Text('Favorite'),
           ),
         ],
       ),

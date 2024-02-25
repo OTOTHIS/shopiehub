@@ -37,11 +37,11 @@ class _PaymentSuccessState extends State<PaymentSuccess> {
                 },
                 height: 50,
                 elevation: 0,
-                splashColor: Colors.yellow[700],
+                splashColor: Color.fromRGBO(37, 99, 235, 3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)
                 ),
-                color: Colors.yellow[800],
+                color: Color.fromRGBO(37, 99, 235, 5),
                 child: const Center(
                   child: Text("Back to Home", style: TextStyle(color: Colors.white, fontSize: 16),),
                 ),

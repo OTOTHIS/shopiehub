@@ -35,12 +35,12 @@ export function MainNav({ className, ...props }) {
       >
         Overview
       </Link>
-      <Link
+      {/* <Link
         to={OWNER_DASHBOARD_ROUTE}
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Customers
-      </Link>
+      </Link> */}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

@@ -38,20 +38,20 @@ const Footer = () => {
                 </div>
 
                 <div className='text-center relative mx-auto max-w-sm'>
-                  <h3 className='font-semibold text-gray-900'>
-                    Become a seller
-                  </h3>
-                  <p className='mt-2 text-sm text-muted-foreground'>
-                    If you&apos;d like to sell high-quality
-                    digital products, you can do so in
-                    minutes.{' '}
-                    <Link
-                      to='/sign-in?as=seller'
-                      className='whitespace-nowrap font-medium text-black hover:text-zinc-900'>
-                      Get started &rarr;
-                    </Link>
-                  </p>
-                </div>
+  <h3 className='font-semibold text-gray-900'>
+    Rejoignez notre plateforme !
+  </h3>
+  <p className='mt-2 text-sm text-muted-foreground'>
+    Si vous souhaitez vendre des produits numériques de haute qualité,
+    vous pouvez le faire en quelques minutes.{' '}
+    <Link
+      to='/login'
+      className='whitespace-nowrap font-medium text-black hover:text-zinc-900'>
+      Commencez maintenant &rarr;
+    </Link>
+  </p>
+</div>
+
               </div>
             </div>
           )}

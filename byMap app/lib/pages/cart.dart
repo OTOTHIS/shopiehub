@@ -210,10 +210,10 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
                       },
                       height: 50,
                       elevation: 0,
-                      splashColor: Colors.yellow[700],
+                      splashColor:Color.fromRGBO(37, 99, 235, 10),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      color: Colors.yellow[800],
+                      color:Color.fromRGBO(37, 99, 235, 10),
                       child: const Center(
                         child: Text(
                           "Checkout",
@@ -255,12 +255,12 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
               margin: const EdgeInsets.only(right: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                // child: Image.network(
-                //   product.image,
-                //   fit: BoxFit.cover,
-                //   height: 100,
-                //   width: 100,
-                // ),
+                child: Image.network(
+                  "http://127.0.0.1:9900/images?id=${product.image}",
+                  fit: BoxFit.cover,
+                  height: 100,
+                  width: 100,
+                ),
               ),
             ),
             Expanded(
@@ -268,9 +268,11 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product.description,
+                     product.description.length > 20
+      ? '${product.description.substring(0, 20)}...'
+      : product.description,
                       style: TextStyle(
-                        color: Colors.orange.shade400,
+                        color:Color.fromRGBO(37, 99, 235, 3),
                         fontSize: 14,
                       ),
                     ),
@@ -328,7 +330,7 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
                 MaterialButton(
                   padding: const EdgeInsets.all(0),
                   minWidth: 10,
-                  splashColor: Colors.yellow[700],
+                  splashColor: Color.fromRGBO(37, 99, 235, 6),
                   onPressed: () {
                     setState(() {
                       cartItemCount[index]++;

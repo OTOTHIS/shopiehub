@@ -71,8 +71,8 @@ class ownerController extends Controller
   
    $products->transform(function ($product) {
     // Remove "images/" from the image path stored in the database
-    $imagePathWithoutImages = str_replace('images/', '', $product->image);
-    
+    $imagePathWithoutImages = str_replace('', '', $product->image);
+    // images/
     // Adjust the image URL based on the modified path
     $product->image_url = asset("storage/{$imagePathWithoutImages}");
     

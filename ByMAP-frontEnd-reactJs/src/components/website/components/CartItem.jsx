@@ -9,7 +9,7 @@ import { formatPrice } from '../../../lib/utils'
 const CartItem = ({ product }) => {
   // const { img } = product.imgs[0]
   const { removeItem } = useCart()
-
+  const backend_URL = import.meta.env.VITE_BACKEND_URL
 
   return (
     <div className='space-y-3 py-2'>
@@ -18,7 +18,7 @@ const CartItem = ({ product }) => {
           <div className='relative aspect-square h-16 w-16 min-w-fit overflow-hidden rounded'>
             {typeof product.image === 'string' && product.image ? (
               <img
-                src={product.image}
+                src={`${backend_URL}/storage/${product.image}`}
                 alt={product.name}
                 fill
                 className='absolute object-cover'
@@ -55,7 +55,7 @@ const CartItem = ({ product }) => {
 
         <div className='flex flex-col space-y-1 font-medium'>
           <span className='ml-auto line-clamp-1 text-sm'>
-            {formatPrice(product.price)}
+            {product.price} MAD
           </span>
         </div>
       </div>

@@ -19,8 +19,6 @@ class _SearchPageState extends State<SearchPage> {
   List<dynamic> productList = [];
   @override
   void initState() {
-    print(
-        "erzrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrzer");
     products();
     super.initState();
   }
@@ -42,7 +40,7 @@ class _SearchPageState extends State<SearchPage> {
                             )));
               },
               child: Container(
-                margin: const EdgeInsets.only(right: 20, bottom: 25),
+                margin: const EdgeInsets.only(right: 5, bottom: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
@@ -120,7 +118,7 @@ class _SearchPageState extends State<SearchPage> {
                               ? '${product.description.substring(0, 20)}...'
                               : product.description,
                           style: TextStyle(
-                            color: Colors.orange.shade400,
+                            color: Color.fromRGBO(37, 99, 235, 10),
                             fontSize: 14,
                           ),
                         ),
@@ -167,30 +165,19 @@ class _SearchPageState extends State<SearchPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Opacity(
-                opacity: .7,
-                child: Container(
-                  width: double.infinity,
-                  height: 250,
-                  child: const Image(
-                      image: AssetImage("assets/images/search.png")),
-                )),
-            const SizedBox(
-              height: 40,
-            ),
-          Expanded(
-  child: GridView.builder(
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      crossAxisSpacing: 8.0, // Adjust as needed
-      mainAxisSpacing: 8.0,   // Adjust as needed
-    ),
-    itemCount: productList.length,
-    itemBuilder: (context, index) {
-      return productCart(productList[index]);
-    },
-  ),
-)
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 2, // Adjust as needed
+                  mainAxisSpacing: 6, // Adjust as needed
+                ),
+                itemCount: productList.length,
+                itemBuilder: (context, index) {
+                  return productCart(productList[index]);
+                },
+              ),
+            )
           ],
         ));
   }

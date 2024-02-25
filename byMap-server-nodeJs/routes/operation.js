@@ -93,66 +93,6 @@ router.post("/api/Facture", (req, res) => {
 });
 
 
-/**///////////////////////////////////////////////////////////////////////////////////*********** */ */
-
-// router.post("/operation", (req, res) => {
-//   const operationsArray = req.body;
-
-//   if (!Array.isArray(operationsArray) || operationsArray.length === 0) {
-//     return res.status(400).json({ error: "Invalid input data" });
-//   }
-
-//   connection.query(
-//     "SELECT MAX(id) AS max_id FROM operations",
-//     (error, maxResult) => {
-//       if (error) {
-//         console.log("Error getting max id_operation:", error);
-//         return res
-//           .status(500)
-//           .json({ error: "Failed to get the maximum id_operation" });
-//       }
-
-//       const maxIdOperation = maxResult[0].max_id + 1;
-//       let currentIndex = 0;
-
-//       const insertNextOperation = () => {
-//         if (currentIndex < operationsArray.length) {
-//           const operation = operationsArray[currentIndex];
-//           const id_operation = maxIdOperation + currentIndex; // Adjust this if needed
-
-//           connection.query(
-//             "INSERT INTO `operations` SET ?",
-//             {
-//               id_operation,
-//               type: operation.type,
-//               qte: operation.qte,
-//               magazin_id: operation.magazin_id,
-//               id_produit: operation.id_produit,
-//               created_at: formatCurrentDate(), // Make sure this function is defined
-//               updated_at: formatCurrentDate(),
-//             },
-//             (error, results, fields) => {
-//               if (error) {
-//                 console.error("Error saving operation:", error);
-//                 return res
-//                   .status(500)
-//                   .json({ error: "Failed to save the operation" });
-//               }
-//               currentIndex++;
-//               insertNextOperation();
-//             }
-//           );
-//         } else {
-//           res.json({ message: "Operations ajoutées avec succès" });
-//         }
-//       };
-
-//       // Start inserting the first operation
-//       insertNextOperation();
-//     }
-//   );
-// });
-
 
 /****************************************************************************/
 

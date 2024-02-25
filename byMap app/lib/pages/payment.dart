@@ -63,9 +63,9 @@ class _PaymentPageState extends State<PaymentPage> {
                     borderRadius: BorderRadius.circular(30),
                     gradient: LinearGradient(
                       colors: [
-                        Colors.orange,
-                        Colors.yellow.shade800,
-                        Colors.yellow.shade900,
+                        Color.fromRGBO(37, 99, 235, 10),
+                        Color.fromRGBO(37, 99, 235, 7),
+                        Color.fromRGBO(37, 99, 235, 4),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -239,11 +239,11 @@ class _PaymentPageState extends State<PaymentPage> {
                   onPressed: _isLoading ? null : () { pay();  },
                   height: 50,
                   elevation: 0,
-                  splashColor: Colors.yellow[700],
+                  splashColor: Color.fromRGBO(37, 99, 235, 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                   ),
-                  color: Colors.yellow[800],
+                  color: Color.fromRGBO(37, 99, 235, 10),
                   child: Center(
                     child: _isLoading ? Container(
                       width: 20,

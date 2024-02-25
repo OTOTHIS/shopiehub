@@ -35,8 +35,6 @@ Route::middleware(['auth:sanctum', 'ability:buyer'])->prefix('buyer')->group(sta
 
 
 Route::middleware(['auth:sanctum', 'ability:admin'])->prefix('admin')->group(static function () {
-
-
     Route::apiResources([
         'owners' => ownerController::class,
     ]); 
@@ -52,15 +50,12 @@ Route::middleware(['auth:sanctum', 'ability:owner'])->prefix('owner')->group(sta
     Route::apiResource('products', ProductController::class);
     Route::get('/producss', [ownerController::class, 'getProductsByMagazinAuth']);
     Route::get('/magazin/{magazinId}/products', [OwnerController::class, 'getProductsByOwnerAndMagazin']);
-
    // Route::apiResource('products', ProductController::class);
-
-
-   
     Route::get('/', function (Request $request) {
         return $request->user();
     });
 });
+
 Route::apiResource('magazins', MagazinController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner']);
 // Route::apiResource('categories', CategoryController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner' , 'ability:admin','ability:buyer']);
 // Route::apiResource('products', CategoryController::class)->withoutMiddleware(['auth:sanctum', 'ability:owner' , 'ability:admin','ability:buyer']);

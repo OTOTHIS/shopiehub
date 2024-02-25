@@ -63,17 +63,13 @@ const Cart = () => {
             <div className="space-y-4 pr-6">
               <Separator />
               <div className="space-y-1.5 text-sm">
-                <div className="flex">
+                {/* <div className="flex">
                   <span className="flex-1">Shipping</span>
                   <span>Free</span>
-                </div>
-                <div className="flex">
-                  <span className="flex-1">Transaction Fee</span>
-                  <span>{formatPrice(fee)}</span>
-                </div>
+                </div> */}
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>{formatPrice(cartTotal + fee)}</span>
+                  <span>{cartTotal} MAD</span>
                 </div>
               </div>
 
